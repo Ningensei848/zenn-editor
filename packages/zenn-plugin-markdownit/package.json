@@ -1,0 +1,62 @@
+{
+  "name": "markdown-it-zenn",
+  "version": "0.1.100",
+  "license": "MIT",
+  "description": "Zenn editor plugin for markdown-it.",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ningensei848/zenn-editor.git",
+    "directory": "packages/zenn-plugin-markdownit"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:strict": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "build": "rimraf lib/* && tsc -p .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.19",
+    "@types/markdown-it": "^10.0.1",
+    "@types/node": "^14.0.5",
+    "@types/prismjs": "^1.16.6",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "jest": "^26.6.3",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.4",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@steelydylan/markdown-it-imsize": "^1.0.2",
+    "@steelydylan/prism-diff-highlight": "1.0.4",
+    "markdown-it": "^11.0.0",
+    "markdown-it-anchor": "^8.1.2",
+    "markdown-it-container": "^2.0.0",
+    "markdown-it-footnote": "^3.0.2",
+    "markdown-it-inline-comments": "^1.0.1",
+    "markdown-it-link-attributes": "^3.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "prismjs": "^1.25.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "markdown",
+    "markdown-it",
+    "markdown-it-plugin",
+    "zenn"
+  ],
+  "author": "Ningensei848 <k.kubokawa@klis.tsukuba.ac.jp>",
+  "bugs": {
+    "url": "https://github.com/Ningensei848/zenn-editor/issues"
+  },
+  "homepage": "https://github.com/zenn-dev/zenn-editor/tree/main/packages/zenn-plugin-markdownit#readme"
+}
