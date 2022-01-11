@@ -11,6 +11,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 /** @type WebpackConfig */
 const webExtensionConfig = {
@@ -18,13 +19,15 @@ const webExtensionConfig = {
 	target: 'webworker', // extensions run in a webworker context
 	entry: {
 		'extension': './src/web/extension.ts',
+		'preview': './src/web/preview.ts',
 		'test/suite/index': './src/web/test/suite/index.ts'
 	},
 	output: {
 		filename: '[name].js',
-		path: path.join(__dirname, './dist/web'),
+		path: path.join(__dirname, './lib/web'),
 		libraryTarget: 'commonjs',
-		devtoolModuleFilenameTemplate: '../../[resource-path]'
+		devtoolModuleFilenameTemplate: '../../[resource-path]',
+		clean: true
 	},
 	resolve: {
 		mainFields: ['browser', 'module', 'main'], // look for `browser` entry point in imported node modules
@@ -36,22 +39,31 @@ const webExtensionConfig = {
 			// Webpack 5 no longer polyfills Node.js core modules automatically.
 			// see https://webpack.js.org/configuration/resolve/#resolvefallback
 			// for the list of Node.js core module polyfills.
-			'assert': require.resolve('assert')
+			'assert': require.resolve('assert'),
+			'crypto': require.resolve('crypto-browserify'),
+			'stream': require.resolve('stream-browserify')
 		}
 	},
 	module: {
-		rules: [{
-			test: /\.ts$/,
-			exclude: /node_modules/,
-			use: [{
-				loader: 'ts-loader'
-			}]
-		}]
+		rules: [
+			{
+				test: /\.ts$/,
+				exclude: /node_modules/,
+				use: [{
+					loader: 'ts-loader'
+				}]
+			},
+			{
+				test: /\.css$/i,
+				use: [MiniCssExtractPlugin.loader, "css-loader"],
+			}
+		]
 	},
 	plugins: [
-		new webpack.ProvidePlugin({
-			process: 'process/browser', // provide a shim for the global `process` variable
-		}),
+		// new webpack.ProvidePlugin({
+		// 	process: 'process/browser', // provide a shim for the global `process` variable
+		// }),
+		new MiniCssExtractPlugin()
 	],
 	externals: {
 		'vscode': 'commonjs vscode', // ignored because it doesn't exist
@@ -65,4 +77,4 @@ const webExtensionConfig = {
 	},
 };
 
-module.exports = [ webExtensionConfig ];
+module.exports = [webExtensionConfig];
